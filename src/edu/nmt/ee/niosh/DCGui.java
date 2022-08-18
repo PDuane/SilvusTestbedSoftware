@@ -419,6 +419,7 @@ public class DCGui extends JFrame {
 	
 	public void onRun(int iteration) {}
 	
+	@SuppressWarnings("unchecked")
 	public void saveSession() {
 		JSONObject session = new JSONObject();
 		session.put(IPerfTest.LOCAL_RADIO_IP, localRadioIp.getText().trim());
