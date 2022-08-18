@@ -1,0 +1,2 @@
+local_radio_ip,local_radio_nodeid,dest_ip,dest_nodeid,throughput_ip,sc_freq,sc_bw,tx_power,rtt_avg,rtt_min,rtt_max,send_throughput,recv_throughput,packet_loss,radio_throughput,loss_rate,distance,rssi_channel1,rssi_channel2,rssi_channel3,rssi_channel4,local_interence,noise,routing_path,weakest_link,remote_mcs,notes
+172.20.169.71,43335,,,172.20.169.31,2420,5,30,10,9,14,error,error,error,4.586562,"0.000",1.5,-1,-4,-110,-110,12,-89,43335,43337,["43335","43337","87","1"],6,

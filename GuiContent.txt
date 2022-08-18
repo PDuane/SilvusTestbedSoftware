@@ -1,0 +1,25 @@
+IP Address
+Local Radio IP
+
+IPerf Throughput Test (Check box)
+IP of server (only editable if above is checked)
+
+File name
+Browse (opens JFileChooser)
+Append (Check box, check after one run uncheck)
+
+Distance
+Note/Description
+
+Get Stats Button
+
+-----------------------------------
+
+Local radio IP is needed to use SC to get info for
+
+-----------------------------------
+Will Output:
+A CSV file with
+Distance (given by user)
+Throughput (iperf3) / Link Throughput (SC API)
+Packet loss (iperf3)
