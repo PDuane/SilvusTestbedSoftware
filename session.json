@@ -1,1 +1,1 @@
-{"local_radio_ip":"172.20.169.71","doIperfTest":"true","iperf_ip":"172.20.169.31","notes":"Radios at table at home","distance":"1","dest_ip":"172.20.169.73","output_filename":"test.lsv","iterations":"10"}
+{"local_radio_ip":"172.20.169.71","doIperfTest":"true","iperf_ip":"172.20.169.31","notes":"Test in lab","distance":"1","dest_ip":"172.20.169.73","output_filename":"test.lsv","iterations":"10"}
