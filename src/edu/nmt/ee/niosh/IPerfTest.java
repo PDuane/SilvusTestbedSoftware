@@ -101,7 +101,7 @@ public class IPerfTest {
 					data.put(DISTANCE, distance);
 					setRunDialogText("Running Ping latency test");
 					System.out.println("Running Ping Latency Test");
-					HashMap<String, Long> ping_res = ping(address);
+					HashMap<String, Double> ping_res = ping(address);
 					if (ping_res == null) {
 						System.err.println("Could not connect to " + address);
 					}
@@ -521,13 +521,19 @@ public class IPerfTest {
 		return map;
 	}
 	
-	public static HashMap<String, Long> ping(String ip) {
-		long rttMin, rttMax, rttAvg;
+	public static HashMap<String, Double> ping(String ip) {
+		double rttMin, rttMax, rttAvg, rttDev;
 		try {
 			int pingCount = 10;
-			String command = String.format("ping -n %d %s", pingCount, ip);
+			long maxRuntime = 30000;
+			String command = String.format("ping -c %d %s", pingCount, ip);
+			long endTime = System.currentTimeMillis() + maxRuntime;
 			Process proc = Runtime.getRuntime().exec(command);
-			proc.waitFor();
+			while (proc.isAlive() && System.currentTimeMillis() < endTime) {
+				if (proc.getErrorStream().available() > 0) System.err.write(proc.getErrorStream().readAllBytes());
+			}
+			if (proc.isAlive()) proc.destroy();
+//			proc.waitFor();
 			
 			if (proc.exitValue() != 0) {
 				System.err.println("ping Command exited with nonzero value: " + proc.exitValue());
@@ -538,21 +544,27 @@ public class IPerfTest {
 			String otpt = new String(proc.getInputStream().readAllBytes());
 			otpt = otpt.substring(otpt.lastIndexOf('\n', otpt.length() - 2) + 1, otpt.length() - 2).strip();
 			
-			String[] otpt_split = otpt.split(",");
+//			System.err.println(new String(proc.getErrorStream().readAllBytes()));
+			
+			otpt = otpt.substring(otpt.indexOf("=") + 1, otpt.length() - 3).strip();
+			
+			String[] otpt_split = otpt.split("/");
 			for (int i = 0; i < otpt_split.length; i++) {
 				otpt_split[i] = otpt_split[i].strip();
 				otpt_split[i] = otpt_split[i].substring(otpt_split[i].indexOf('=') + 1).strip();
 				otpt_split[i] = otpt_split[i].substring(0, otpt_split[i].length() - 2);
 			}
 			
-			rttMin = Long.parseLong(otpt_split[0]);
-			rttMax = Long.parseLong(otpt_split[1]);
-			rttAvg = Long.parseLong(otpt_split[2]);
+			rttMin = Double.parseDouble(otpt_split[0]);
+			rttMax = Double.parseDouble(otpt_split[1]);
+			rttAvg = Double.parseDouble(otpt_split[2]);
+			rttDev = Double.parseDouble(otpt_split[3]);
 			
-			HashMap<String, Long> map = new HashMap<>();
+			HashMap<String, Double> map = new HashMap<>();
 			map.put("rtt_avg", rttAvg);
 			map.put("rtt_min", rttMin);
 			map.put("rtt_max", rttMax);
+			map.put("rtt_dev", rttDev);
 			
 			return map;
 			

@@ -1,0 +1,4 @@
+iteration|local_radio_ip|local_radio_nodeid|dest_ip|dest_nodeid|throughput_ip|sc_freq|sc_bw|tx_power|actual_tx_power|rtt_avg|rtt_min|rtt_max|send_throughput|recv_throughput|packet_loss|radio_throughput|loss_rate|distance|rssi_channel1|rssi_channel2|rssi_channel3|rssi_channel4|local_interence|noise|routing_path|weakest_link|remote_mcs|notes
+1|172.20.169.73|error|||172.20.169.31|error|error|error|error|6|3|11|error|error|error|error|error|3.0|-53||||error|error|error|["43337","43335","61","1"]|error|Demo
+2|172.20.169.73|error|||172.20.169.31|error|error|error|error|5|5|9|error|error|error|error|error|3.0|-72||||error|error|error|["43337","43335","57","1"]|error|Demo
+3|172.20.169.73|error|||172.20.169.31|error|error|error|error|5|4|7|error|error|error|error|error|3.0|-69||||error|error|error|["43337","43335","61","1"]|error|Demo

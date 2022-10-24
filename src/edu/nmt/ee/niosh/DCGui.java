@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -26,6 +27,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
@@ -40,7 +42,7 @@ import org.json.simple.parser.ParseException;
 public class DCGui extends JFrame {
 	
 	private static final long serialVersionUID = -6820646516793494599L;
-	private static ImageIcon FOLDER_ICON;
+	public static ImageIcon FOLDER_ICON;
 	private DCGui instance;
 	private JTextField localRadioIp, remoteRadioIp;
 	private JTextField distance;
@@ -59,7 +61,8 @@ public class DCGui extends JFrame {
 	
 	static {
 		try {
-			FOLDER_ICON = new ImageIcon(ImageIO.read(new File("folder_icon.png")).getScaledInstance(16, 16, BufferedImage.SCALE_SMOOTH));
+			URL img_loc = DCGui.class.getResource("/edu/nmt/ee/niosh/resources/folder_icon.png");
+			FOLDER_ICON = new ImageIcon(ImageIO.read(img_loc).getScaledInstance(16, 16, BufferedImage.SCALE_SMOOTH));
 		} catch (IOException e) {
 			FOLDER_ICON = null;
 		}
@@ -87,10 +90,13 @@ public class DCGui extends JFrame {
 		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
 				| UnsupportedLookAndFeelException e1) {}
 		instance = this;
-		setTitle("StreamCaster Radio Data Collection");
+		setTitle("Testbed Data Collection Tool");
 		setSize(800, 400);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		
+		JTabbedPane tabs = new JTabbedPane();
 		
 		JPanel p, q; // Variables for temporarily storing panels
 		JPanel contentPanel = new JPanel();
@@ -152,7 +158,9 @@ public class DCGui extends JFrame {
 		connectionInfo.add(q);
 		
 		contentPanel.add(connectionInfo);
-		add(contentPanel);
+		tabs.add(contentPanel, "StreamCaster");
+		tabs.add(new USRPPanel(), "USRP");
+		add(tabs);
 		
 		//               END CONNECTION INFORMATION
 		// ----------------------------------------------------
